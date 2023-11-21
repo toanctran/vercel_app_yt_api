@@ -12,9 +12,9 @@ app = FastAPI()
 async def root():
   return{"message":"hello world"}
 
-@app.get("/get_transcript/{video_id}")
-async def get_transcript(request: Request, video_id):
-  transcript = YouTubeTranscriptApi.get_transcript(video_id)
+@app.get("/get_transcript/{language}/{video_id}")
+async def get_transcript(request: Request, video_id, language):
+  transcript = YouTubeTranscriptApi.get_transcript(video_id, [f'{language}'])
 
   formatter = JSONFormatter()
 
