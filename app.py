@@ -22,31 +22,3 @@ async def get_transcript(request: Request, video_id):
   json_formatted = formatter.format_transcript(transcript)
   return json_formatted
     
-
-def custom_openapi():
-    if app.openapi_schema:
-        return app.openapi_schema
-    openapi_schema = get_openapi(
-        title="Video Digest",
-        version="1.0.0",
-        summary="This is the Youtube transcript loader using FastAPI and Vercel",
-        description="Use this to get the Youtube transcript for a Youtube video given Youtube video_id",
-        routes=app.routes,
-    )
-    openapi_schema["info"]["x-logo"] = {
-        "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png"
-    }
-    app.openapi_schema = openapi_schema
-    return app.openapi_schema
-
-
-app.openapi = custom_openapi
-
-with open('openapi.json', 'w') as f:
-    json.dump(get_openapi(
-        title=app.title,
-        version=app.version,
-        openapi_version=app.openapi_version,
-        description=app.description,
-        routes=app.routes,
-    ), f)
